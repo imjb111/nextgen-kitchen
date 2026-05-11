@@ -1,40 +1,1064 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NextGen Kitchen</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flavique Kitchen & Restro Billing System</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+overflow-x:hidden;
+}
+
+:root{
+--orange:#ff7a00;
+--card:#181818;
+--border:rgba(255,255,255,0.08);
+}
+
+header{
+padding:20px;
+background:#111;
+position:sticky;
+top:0;
+z-index:999;
+border-bottom:1px solid var(--border);
+}
+
+.logo{
+font-size:1.7rem;
+font-weight:800;
+color:var(--orange);
+}
+
+.sub{
+font-size:0.85rem;
+color:#aaa;
+margin-top:5px;
+}
+
+.top-bar{
+display:flex;
+gap:12px;
+margin-top:18px;
+}
+
+.top-bar input{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+border-radius:18px;
+background:#1c1c1c;
+color:white;
+}
+
+.admin-btn{
+padding:14px 18px;
+border:none;
+border-radius:18px;
+background:var(--orange);
+font-weight:700;
+cursor:pointer;
+}
+
+.filters{
+display:flex;
+gap:10px;
+overflow:auto;
+padding:18px;
+scrollbar-width:none;
+}
+
+.filters button{
+padding:12px 18px;
+border:none;
+border-radius:30px;
+background:#1c1c1c;
+color:white;
+font-weight:600;
+white-space:nowrap;
+cursor:pointer;
+}
+
+.filters button.active{
+background:var(--orange);
+color:black;
+}
+
+.menu{
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:18px;
+padding-bottom:120px;
+}
+
+.card{
+background:var(--card);
+padding:20px;
+border-radius:24px;
+border:1px solid var(--border);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+border-radius:20px;
+background:rgba(255,122,0,0.15);
+color:var(--orange);
+font-size:0.75rem;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.food-name{
+font-size:1rem;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.food-price{
+color:var(--orange);
+font-size:1.1rem;
+font-weight:700;
+margin-bottom:16px;
+}
+
+.add-btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:18px;
+background:var(--orange);
+font-weight:700;
+cursor:pointer;
+}
+
+.cart-bar{
+position:fixed;
+bottom:15px;
+left:15px;
+right:15px;
+background:#181818;
+padding:16px;
+border-radius:24px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:999;
+border:1px solid var(--border);
+}
+
+.cart-btn{
+padding:14px 18px;
+border:none;
+background:var(--orange);
+border-radius:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+.cart-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+display:none;
+justify-content:center;
+align-items:flex-end;
+z-index:99999;
+}
+
+.cart-content{
+width:100%;
+max-height:94vh;
+overflow:auto;
+background:#111;
+padding:20px;
+border-radius:30px 30px 0 0;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 0;
+border-bottom:1px solid var(--border);
+}
+
+.qty{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.qty button{
+width:32px;
+height:32px;
+border:none;
+border-radius:50%;
+background:var(--orange);
+font-weight:700;
+cursor:pointer;
+}
+
+.form-group{
+margin-top:15px;
+}
+
+.form-group input,
+.form-group textarea{
+width:100%;
+padding:15px;
+border:none;
+border-radius:16px;
+background:#1d1d1d;
+color:white;
+margin-top:8px;
+outline:none;
+}
+
+.pay-btn{
+width:100%;
+padding:18px;
+margin-top:18px;
+border:none;
+border-radius:22px;
+background:linear-gradient(135deg,#ff7a00,#ffb347);
+font-weight:800;
+cursor:pointer;
+font-size:1rem;
+}
+
+.login{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+padding:20px;
+}
+
+.login-box{
+width:100%;
+max-width:380px;
+background:#111;
+padding:30px;
+border-radius:28px;
+border:1px solid var(--border);
+}
+
+.login-box h2{
+text-align:center;
+margin-bottom:25px;
+color:var(--orange);
+}
+
+.login-box input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:16px;
+background:#1d1d1d;
+color:white;
+margin-bottom:15px;
+}
+
+.login-box button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:var(--orange);
+font-weight:700;
+cursor:pointer;
+}
+
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:var(--orange);
+padding:14px 18px;
+border-radius:14px;
+font-weight:700;
+color:black;
+opacity:0;
+transform:translateY(-20px);
+transition:0.4s;
+z-index:999999;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+</style>
 </head>
+
 <body>
 
-  <header class="header">
-    <div>
-      <h1 class="logo">NextGen Kitchen</h1>
-      <p class="subtitle">Premium Food Experience</p>
-    </div>
+<div class="toast" id="toast"></div>
 
-    <button class="cart-btn" onclick="toggleCart()">
-      🛒 Cart (<span id="cart-count">0</span>)
-    </button>
-  </header>
+<!-- LOGIN -->
 
-  <section class="hero">
-    <h2>Delicious Food Delivered Fast</h2>
-    <p>Order your favorite meals instantly.</p>
-  </section>
+<div class="login" id="loginPage">
 
-  <section class="menu-section">
-    <h2 class="section-title">Popular Menu</h2>
+<div class="login-box">
 
-    <div id="menu-container" class="menu-grid"></div>
-  </section>
+<h2>Admin Login</h2>
 
-  <div id="cart-panel" class="cart-panel">
+<input type="text" id="user" placeholder="Username">
+
+<input type="password" id="pass" placeholder="Password">
+
+<button onclick="loginAdmin()">
+Login
+</button>
+
+</div>
+
+</div>
+
+<header>
+
+<div class="logo">
+🍽 Flavique Kitchen & Restro
+</div>
+
+<div class="sub">
+Ashok Creator Delhi • Premium Billing System
+</div>
+
+<div class="top-bar">
+
+<input type="text" id="searchInput" placeholder="Search products">
+
+<button class="admin-btn" onclick="openCart()">
+Invoice
+</button>
+
+</div>
+
+</header>
+
+<div class="filters">
+
+<button class="active" onclick="filterMenu('All',this)">
+All
+</button>
+
+<button onclick="filterMenu('Veg',this)">
+Veg
+</button>
+
+<button onclick="filterMenu('Non Veg',this)">
+Non Veg
+</button>
+
+<button onclick="filterMenu('Starter',this)">
+Starter
+</button>
+
+<button onclick="filterMenu('Rice',this)">
+Rice
+</button>
+
+<button onclick="filterMenu('Premium',this)">
+Premium
+</button>
+
+</div>
+
+<div class="menu" id="menu"></div>
+
+<div class="cart-bar">
+
+<div>
+<h3 id="cartItems">0 Items</h3>
+<p id="cartAmount">Rs. 0</p>
+</div>
+
+<button class="cart-btn" onclick="openCart()">
+Open Invoice
+</button>
+
+</div>
+
+<!-- CART -->
+
+<div class="cart-modal" id="cartModal">
+
+<div class="cart-content">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+<h2>Create Invoice</h2>
+
+<button onclick="closeCart()"
+style="background:none;border:none;color:white;font-size:24px;">
+✖
+</button>
+
+</div>
+
+<div id="cartList"></div>
+
+<div class="form-group">
+<label>Customer Name</label>
+<input type="text" id="name" value="Cash">
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input type="number" id="phone">
+</div>
+
+<div class="form-group">
+<label>Address</label>
+<textarea rows="3" id="address">Store</textarea>
+</div>
+
+<div class="form-group">
+<label>Discount</label>
+<input type="number" id="discount" value="0" oninput="updateCart()">
+</div>
+
+<button class="pay-btn" onclick="generateInvoice()">
+Generate Premium Invoice PDF
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const menuData=[
+
+{name:"Veg Dum Special Biriyani",price:129,type:"Veg Rice"},
+{name:"Mix-Veg Fried Rice",price:109,type:"Veg Rice"},
+{name:"Paneer Fried Rice",price:139,type:"Veg Rice"},
+{name:"Mushroom Fried Rice",price:119,type:"Veg Rice"},
+{name:"Kitchen Special Veg Fried Rice",price:149,type:"Veg Premium"},
+{name:"Chicken Fried Rice",price:129,type:"Non Veg Rice"},
+{name:"Chicken Curry",price:149,type:"Non Veg Main Course"},
+{name:"Chicken 65",price:159,type:"Non Veg Starter"},
+{name:"Chilli Chicken",price:179,type:"Non Veg Starter"},
+{name:"Prawn Masala",price:279,type:"Premium"},
+{name:"Fish Curry",price:139,type:"Fish"}
+
+];
+
+let cart=[];
+
+/* LOGIN */
+
+function loginAdmin(){
+
+const user=
+document.getElementById("user").value;
+
+const pass=
+document.getElementById("pass").value;
+
+if(user==="admin" && pass==="admin"){
+
+document.getElementById("loginPage")
+.style.display="none";
+
+showToast("Login Success");
+
+}else{
+
+alert("Wrong Login");
+
+}
+
+}
+
+/* RENDER MENU */
+
+function renderMenu(data){
+
+const menu=document.getElementById("menu");
+
+menu.innerHTML='';
+
+data.forEach((item,index)=>{
+
+menu.innerHTML+=`
+
+<div class="card">
+
+<div class="badge">
+${item.type}
+</div>
+
+<div class="food-name">
+${item.name}
+</div>
+
+<div class="food-price">
+Rs. ${item.price}
+</div>
+
+<button class="add-btn"
+onclick="addToCart(${index})">
+
+Add To Invoice
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+renderMenu(menuData);
+
+/* FILTER */
+
+function filterMenu(type,btn){
+
+document.querySelectorAll(".filters button")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+if(type==="All"){
+
+renderMenu(menuData);
+
+return;
+
+}
+
+renderMenu(
+
+menuData.filter(item=>
+item.type.includes(type)
+)
+
+);
+
+}
+
+/* SEARCH */
+
+document.getElementById("searchInput")
+.addEventListener("input",(e)=>{
+
+const value=e.target.value.toLowerCase();
+
+renderMenu(
+
+menuData.filter(item=>
+
+item.name.toLowerCase().includes(value)
+
+||
+
+item.type.toLowerCase().includes(value)
+
+)
+
+);
+
+});
+
+/* CART */
+
+function addToCart(index){
+
+const item=menuData[index];
+
+const exist=
+cart.find(x=>x.name===item.name);
+
+if(exist){
+
+exist.qty++;
+
+}else{
+
+cart.push({...item,qty:1});
+
+}
+
+updateCart();
+
+showToast(item.name+" added");
+
+}
+
+function updateCart(){
+
+let total=0;
+let items=0;
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty;
+items+=item.qty;
+
+});
+
+const discount=
+Number(
+document.getElementById("discount")?.value || 0
+);
+
+const final=total-discount;
+
+document.getElementById("cartItems")
+.innerText=items+" Items";
+
+document.getElementById("cartAmount")
+.innerText="Rs. "+final;
+
+const cartList=
+document.getElementById("cartList");
+
+cartList.innerHTML='';
+
+cart.forEach((item,index)=>{
+
+cartList.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+
+<h4>${item.name}</h4>
+
+<p>
+Rs. ${item.price}
+</p>
+
+</div>
+
+<div class="qty">
+
+<button onclick="changeQty(${index},-1)">
+-
+</button>
+
+<span>${item.qty}</span>
+
+<button onclick="changeQty(${index},1)">
++
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+cartList.innerHTML+=`
+
+<h2 style="margin-top:20px;color:#ff7a00;">
+
+Final Amount : Rs. ${final}
+
+</h2>
+
+`;
+
+}
+
+function changeQty(index,type){
+
+cart[index].qty+=type;
+
+if(cart[index].qty<=0){
+
+cart.splice(index,1);
+
+}
+
+updateCart();
+
+}
+
+function openCart(){
+
+document.getElementById("cartModal")
+.style.display="flex";
+
+updateCart();
+
+}
+
+function closeCart(){
+
+document.getElementById("cartModal")
+.style.display="none";
+
+}
+
+/* NUMBER WORDS */
+
+function numberToWords(num){
+
+const a=[
+'','One','Two','Three','Four',
+'Five','Six','Seven','Eight',
+'Nine','Ten','Eleven','Twelve',
+'Thirteen','Fourteen','Fifteen',
+'Sixteen','Seventeen','Eighteen',
+'Nineteen'
+];
+
+const b=[
+'','','Twenty','Thirty','Forty',
+'Fifty','Sixty','Seventy',
+'Eighty','Ninety'
+];
+
+if(num<20) return a[num];
+
+if(num<100)
+return b[Math.floor(num/10)]+' '+a[num%10];
+
+if(num<1000)
+return a[Math.floor(num/100)]+' Hundred '+numberToWords(num%100);
+
+if(num<100000)
+return numberToWords(Math.floor(num/1000))+' Thousand '+numberToWords(num%1000);
+
+return num;
+
+}
+
+/* PDF */
+
+function generateInvoice(){
+
+if(cart.length===0){
+
+showToast("No Products");
+
+return;
+
+}
+
+/* AUTO INVOICE */
+
+let invoiceCounter=
+
+Number(
+localStorage.getItem("invoiceCounter")
+)||1;
+
+const now=new Date();
+
+const day=
+String(now.getDate()).padStart(2,'0');
+
+const month=
+String(now.getMonth()+1).padStart(2,'0');
+
+const year=
+now.getFullYear();
+
+const formattedDate=
+`${day}-${month}-${year}`;
+
+const invoiceId=
+"INV-"+String(invoiceCounter)
+.padStart(3,'0');
+
+localStorage.setItem(
+"invoiceCounter",
+invoiceCounter+1
+);
+
+const pdfFileName=
+`${invoiceId}_${formattedDate}.pdf`;
+
+const { jsPDF }=window.jspdf;
+
+const doc=new jsPDF();
+
+const customer=
+document.getElementById("name").value;
+
+const phone=
+document.getElementById("phone").value;
+
+const address=
+document.getElementById("address").value;
+
+const discount=
+Number(
+document.getElementById("discount").value
+);
+
+let total=0;
+
+doc.setFillColor(255,122,0);
+
+doc.rect(0,0,220,35,'F');
+
+doc.setTextColor(255,255,255);
+
+doc.setFontSize(22);
+
+doc.text(
+"FLAVIQUE KITCHEN & RESTRO",
+15,
+20
+);
+
+doc.setFontSize(11);
+
+doc.text(
+"Ashok Creator Delhi Sales Billing",
+15,
+28
+);
+
+doc.setTextColor(0,0,0);
+
+doc.setFontSize(12);
+
+doc.text(
+"Invoice : "+invoiceId,
+15,
+48
+);
+
+doc.text(
+"Customer : "+customer,
+15,
+56
+);
+
+doc.text(
+"Phone : "+phone,
+15,
+64
+);
+
+doc.text(
+"Address : "+address,
+15,
+72
+);
+
+doc.text(
+"Date : "+formattedDate,
+15,
+80
+);
+
+let y=95;
+
+doc.setFillColor(240,240,240);
+
+doc.rect(15,y,180,10,'F');
+
+doc.text("Product",20,y+7);
+
+doc.text("Qty",120,y+7);
+
+doc.text("Amount",160,y+7);
+
+y+=15;
+
+cart.forEach(item=>{
+
+const subtotal=
+item.price*item.qty;
+
+total+=subtotal;
+
+doc.text(item.name,20,y);
+
+doc.text(String(item.qty),125,y);
+
+doc.text("Rs. "+subtotal,160,y);
+
+y+=10;
+
+});
+
+const final=total-discount;
+
+doc.setFontSize(14);
+
+doc.text(
+"Subtotal : Rs. "+total,
+15,
+y+15
+);
+
+doc.text(
+"Discount : Rs. "+discount,
+15,
+y+25
+);
+
+doc.setTextColor(255,122,0);
+
+doc.text(
+"Final Total : Rs. "+final,
+15,
+y+40
+);
+
+doc.setTextColor(0,0,0);
+
+doc.setFontSize(11);
+
+doc.text(
+"In Words : "+numberToWords(final)+" Rupees Only",
+15,
+y+52
+);
+
+doc.save(pdfFileName);
+
+/* SAVE DATA */
+
+const savedInvoices=
+
+JSON.parse(
+localStorage.getItem("flaviqueInvoices")
+||"[]"
+);
+
+savedInvoices.push({
+
+invoiceId:invoiceId,
+date:formattedDate,
+customer:customer,
+phone:phone,
+address:address,
+products:cart,
+discount:discount,
+finalTotal:final,
+createdTime:
+now.toLocaleTimeString()
+
+});
+
+localStorage.setItem(
+"flaviqueInvoices",
+JSON.stringify(savedInvoices)
+);
+
+/* WHATSAPP */
+
+let summary='';
+
+cart.forEach(item=>{
+
+summary+=
+
+`${item.name}
+Qty : ${item.qty}
+Rs. ${item.price*item.qty}
+
+`;
+
+});
+
+const message=
+encodeURIComponent(
+
+`FLAVIQUE INVOICE
+
+Invoice : ${invoiceId}
+
+Customer : ${customer}
+
+Phone : ${phone}
+
+Address : ${address}
+
+--------------------
+
+${summary}
+
+--------------------
+
+Discount : Rs. ${discount}
+
+Total : Rs. ${final}
+
+Thank You`
+
+);
+
+window.open(
+
+`https://wa.me/91${phone}?text=${message}`,
+
+"_blank"
+
+);
+
+showToast("Invoice Generated");
+
+cart=[];
+
+updateCart();
+
+}
+
+/* TOAST */
+
+function showToast(msg){
+
+const toast=
+document.getElementById("toast");
+
+toast.innerText=msg;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2500);
+
+}
+
+</script>
+
+</body>
+</html>  <div id="cart-panel" class="cart-panel">
 
     <div class="cart-top">
       <h2>Your Cart</h2>
