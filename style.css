@@ -1,70 +1,82 @@
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #050505;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(2, 44, 34, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 18px 25px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  color: red;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.cart-item {
-  border-bottom: 1px solid #333;
-  padding: 10px 0;
-}
-
-.remove-btn {
-  background: red;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 8px;
-  margin-top: 8px;
-  cursor: pointer;
-}
-
-.checkout-box {
-  margin-top: 20px;
-}
-
-.checkout-box input,
-.checkout-box textarea {
-  width: 100%;
-  margin-top: 12px;
-  padding: 12px;
-  background: #000;
-  border: 1px solid #333;
-  border-radius: 10px;
-  color: white;
-}
-
-.pay-btn,
-.pdf-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  margin-top: 15px;
-  cursor: pointer;
+.logo {
+  color: #FFD700;
+  font-size: 32px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
-.pay-btn {
-  background: green;
-  color: white;
+.subtitle {
+  color: #d1d5db;
+  font-size: 13px;
+  margin-top: 2px;
 }
 
-.pdf-btn {
-  background: gold;
+.cart-btn {
+  background: linear-gradient(135deg, #FFD700, #ffb300);
   color: black;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,215,0,0.4);
 }
 
-footer {
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 30px;
-  color: #aaa;
+  padding: 40px 20px;
+  background:
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h2 {
+  font-size: 48px;
+  color: #FFD700;
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px rgba(255,215,0,0.4);
+}
+
+.hero p {
+  max-width: 700px;
+  color: #f3f4f6;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.menu-section {
+  padding: 60px 20px;
 }
