@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextGen Kitchen</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-black text-white">
+
+  <header class="sticky top-0 z-50 bg-[#022c22] shadow-lg p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-yellow-400">NextGen Kitchen</h1>
+
+    <button onclick="toggleCart()" class="bg-yellow-400 text-black px-4 py-2 rounded-xl">
+      Cart (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <section class="p-5">
+    <h2 class="text-3xl mb-5 text-yellow-400">Menu</h2>
+
+    <div id="menu-container" class="grid md:grid-cols-3 gap-5"></div>
+  </section>
+
+  <div id="cart-panel" class="fixed top-0 right-[-100%] w-[90%] md:w-[400px] h-full bg-[#111] p-5 transition-all duration-300 overflow-y-auto z-50">
+
+    <div class="flex justify-between items-center mb-5">
+      <h2 class="text-2xl text-yellow-400">Your Cart</h2>
+      <button onclick="toggleCart()" class="text-red-400 text-2xl">×</button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="mt-5 border-t border-gray-700 pt-5">
+      <h3 class="text-xl">Total: ₹<span id="total-price">0</span></h3>
+
+      <input id="customer-name" type="text" placeholder="Your Name" class="w-full p-3 rounded bg-black border border-gray-700 mt-4" />
+
+      <input id="customer-phone" type="text" placeholder="Phone Number" class="w-full p-3 rounded bg-black border border-gray-700 mt-3" />
+
+      <textarea id="customer-address" placeholder="Address" class="w-full p-3 rounded bg-black border border-gray-700 mt-3"></textarea>
+
+      <button onclick="payNow()" class="w-full bg-green-500 text-white py-3 rounded-xl mt-4">
+        Pay & Place Order
+      </button>
+
+      <button onclick="downloadPDF()" class="w-full bg-yellow-400 text-black py-3 rounded-xl mt-3">
+        Download Invoice
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
