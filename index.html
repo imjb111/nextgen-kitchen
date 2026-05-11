@@ -70,4 +70,37 @@
 
   <script src="script.js"></script>
 </body>
+</html>      <h2>Your Cart</h2>
+      <button class="close-btn" onclick="toggleCart()">×</button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="checkout-box">
+      <h3>Total: ₹<span id="total-price">0</span></h3>
+
+      <input type="text" id="customer-name" placeholder="Your Name">
+
+      <input type="text" id="customer-phone" placeholder="Phone Number">
+
+      <textarea id="customer-address" placeholder="Delivery Address"></textarea>
+
+      <button class="pay-btn" onclick="payNow()">
+        Pay & Order
+      </button>
+
+      <button class="pdf-btn" onclick="downloadPDF()">
+        Download Invoice
+      </button>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>UPI: 8249577736@ybl</p>
+    <p>© 2026 NextGen Kitchen</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
